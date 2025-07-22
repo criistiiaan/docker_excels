@@ -1,0 +1,21 @@
+name: Run Docker ETL
+
+on:
+  push:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 3 * * *'  # Daily at 3 AM UTC
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Build Docker image
+      run: docker build -t docker_excels .
+
+    - name: Run Docker container
+      run: docker run docker_excels
