@@ -1,16 +1,11 @@
-# Dockerfile for custom data pipe
-FROM python:3.11-slim
+# Use your published base image with all needed Python libraries
+FROM pacodificar/python-etl-base:latest
 
+# Set the working directory inside the container
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
-
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
-
+# Copy all local files (scripts, configs, etc.) to the container
 COPY . .
 
+# Command to run your main Python script
 CMD ["python", "main.py"]
